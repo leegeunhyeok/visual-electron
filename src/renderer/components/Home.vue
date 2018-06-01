@@ -1,9 +1,9 @@
 <template>
-  <div id="wrapper">
+  <div id="wrapper" @click="$emit('closeDrawer')">
     <div id="home">
       <img src="../assets/logo.png">
       <div @click="open('https://github.com/leegeunhyeok')">
-        Home
+        {{ lang[$store.state.language.lang]['greet'] }}
       </div>
     </div>
   </div>
@@ -11,7 +11,8 @@
 
 <script>
 export default {
-  name: 'main',
+  name: 'home',
+  props: ['lang'],
   methods: {
     open (link) {
       this.$electron.shell.openExternal(link)

@@ -8,21 +8,40 @@
       </div>
     </div>
     <transition name="drawer-slide" mode="in-out">
-      <div id="drawer" v-if="drawerOpen">
-        TODO: Drawer -> To component
-      </div>
+      <!-- TODO: Drawer 메뉴 클릭 시 해당 메뉴 데이터 받기 -->
+      <drawer v-if="drawerOpen" :lang="lang" @clickMenu="drawerMenu"></drawer>
     </transition>
-    <router-view></router-view>
+    <transition>
+      <setting v-if="settingPopup"></setting>
+    </transition>
+    <router-view @closeDrawer="drawerClose" :lang="lang"></router-view>
   </div>
 </template>
 
 <script>
+import Language from './model/LanguagePack.js'
+
+import Drawer from './components/Drawer.vue'
+import Setting from './components/Setting.vue'
+
 export default {
   name: 'visual-electron',
   data () {
     return {
-      drawerOpen: false
+      lang: Language,
+      drawerOpen: false,
+      settingPopup: false
     }
+  },
+  components: {
+    'drawer': Drawer,
+    'setting': Setting
+  },
+  /* Config 파일 읽기 */
+  created () {
+    const fs = require('fs')
+    const config = fs.readFileSync('./config/config.ini')
+    this.$store.commit('CHANGE_LANGUAGE', config)
   },
   methods: {
     /* Drawer 토글 */
@@ -40,6 +59,20 @@ export default {
         middle.classList.remove('drawer-opend-middle')
         bottom.classList.remove('drawer-opend-bottom')
       }
+    },
+    /* Drawer 닫기 */
+    drawerClose () {
+      this.drawerOpen = false
+      let top = document.getElementsByClassName('horizontal-line-top')[0]
+      let middle = document.getElementsByClassName('horizontal-line-middle')[0]
+      let bottom = document.getElementsByClassName('horizontal-line-bottom')[0]
+      top.classList.remove('drawer-opend-top')
+      middle.classList.remove('drawer-opend-middle')
+      bottom.classList.remove('drawer-opend-bottom')
+    },
+    /* Drawer 선택 메뉴에 알맞는 동작 */
+    drawerMenu (e) {
+      console.log(e)
     }
   }
 }
@@ -158,11 +191,4 @@ body { font-family: 'Source Sans Pro', sans-serif; }
   background-color: #13141a;
 }
 
-#drawer {
-  background-color: #1a1b24;
-  position: absolute;
-  top: 50px;
-  width: 300px;
-  height: calc(100% - 50px);
-}
 </style>
