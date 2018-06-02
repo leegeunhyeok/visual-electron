@@ -1,6 +1,6 @@
 {
   "name": "visual-electron",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "author": "Leegeunhyeok <lghlove0509@naver.com>",
   "description": "Electron + Vue.js based data visualization tool",
   "license": "MIT",
@@ -27,8 +27,8 @@
   },
   "homepage": "https://github.com/leegeunhyeok/visual-electron#readme",
   "build": {
-    "productName": "visual-electron",
-    "appId": "org.simulatedgreg.electron-vue",
+    "productName": "Visual Electron",
+    "appId": "com.leegeunhyeok.electron-vue",
     "directories": {
       "output": "build"
     },

@@ -15,6 +15,27 @@
         <img id="github-icon" src="../assets/github.svg">
         <h4 id="github-id">Leegeunhyeok</h4>
       </div>
+      <div id="system-info-area">
+        <div id="system-info">
+          <div id="system-title">{{ lang[$store.state.setting.lang]['info']['system'] }}</div>
+          <div class="system-info-item">
+            <div class="system-info-title">Electron</div>
+            <div>{{ electron }}</div>
+          </div>
+          <div class="system-info-item">
+            <div class="system-info-title">Node.js</div>
+            <div>{{ node }}</div>
+          </div>
+          <div class="system-info-item">
+            <div class="system-info-title">Vue.js</div>
+            <div>{{ vue }}</div>
+          </div>
+          <div class="system-info-item">
+            <div class="system-info-title">Platform</div>
+            <div>{{ platform }}</div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -25,7 +46,11 @@ export default {
   props: ['lang'],
   data () {
     return {
-      chart: null
+      chart: null,
+      electron: process.versions['atom-shell'],
+      node: process.versions.node,
+      platform: require('os').platform(),
+      vue: require('vue/package.json').version
     }
   },
   mounted () {
@@ -57,6 +82,8 @@ export default {
         }]
       },
       options: {
+        responsive: true,
+        maintainAspectRatio: false,
         scales: {
           yAxes: [{
             ticks: {
@@ -92,7 +119,10 @@ export default {
 <style>
 
 #information {
+  display: inline-block;
+  width: 100%;
   padding-top: 50px;
+  background-color: #2f3242;
 }
 
 #info-area {
@@ -114,6 +144,8 @@ export default {
 
 #github-info {
   cursor: pointer;
+  margin: auto;
+  margin-top: 50px;
 }
 
 #github-icon {
@@ -129,7 +161,9 @@ export default {
 #sample-chart-area {
   margin: auto;
   position: relative;
-  width: 70%;
+  margin-top: 4%;
+  width: 65%;
+  height: 45vh;
 }
 
 #sample-chart-button {
@@ -144,6 +178,45 @@ export default {
 
 #sample-chart-button:hover {
   background-color: #1a1b24;
+}
+
+@media (min-width: 1200px) {
+  #sample-chart-area {
+    margin-top: 6%;
+    width: 50%;
+    height: 40vh;
+  }
+}
+
+#system-info-area {
+  margin: auto;
+  margin-top: 50px;
+  margin-bottom: 50px;
+  width: 80%;
+}
+
+#system-info {
+  margin: auto;
+  padding: 10px;
+  width: 60%;
+  background-color: rgba(162, 236, 251, 0.2);
+  border-radius: 2px;
+  border: 3px solid #a2ecfb;
+}
+
+#system-title {
+  font-weight: bold;
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+}
+
+.system-info-item {
+  margin: 20px 0;
+}
+
+.system-info-title {
+  font-weight: bold;
+  margin-bottom: 5px;
 }
 
 </style>

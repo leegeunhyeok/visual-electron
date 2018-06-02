@@ -34,7 +34,8 @@ const $kor = {
     lastest: '최신 버전'
   },
   info: {
-    introduce: 'Electron + Vue.js 기반의 데이터 시각화 도구입니다'
+    introduce: 'Electron + Vue.js 기반의 데이터 시각화 도구입니다',
+    system: '시스템 정보'
   }
 }
 
@@ -66,7 +67,8 @@ const $eng = {
     lastest: 'Lastest version'
   },
   info: {
-    introduce: 'Electron + Vue.js based data visualization tool'
+    introduce: 'Electron + Vue.js based data visualization tool',
+    system: 'System Information'
   }
 }
 
