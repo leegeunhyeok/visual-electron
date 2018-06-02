@@ -12,12 +12,12 @@ const $kor = {
   setting: '설정',
   drawer: [
     {
-      text: '새 비쥬얼 생성',
+      text: '새 비주얼 생성',
       name: 'create'
     },
     {
-      text: '검색',
-      name: 'search'
+      text: '비주얼 불러오기',
+      name: 'load'
     },
     {
       text: '정보',
@@ -31,7 +31,10 @@ const $kor = {
       enable: '활성화',
       disable: '비활성화'
     },
-    update: '업데이트 확인'
+    lastest: '최신 버전'
+  },
+  info: {
+    introduce: 'Electron + Vue.js 기반의 데이터 시각화 도구입니다'
   }
 }
 
@@ -41,12 +44,12 @@ const $eng = {
   setting: 'Setting',
   drawer: [
     {
-      text: 'Create new visual',
+      text: 'Create new Visual',
       name: 'create'
     },
     {
-      text: 'Search',
-      name: 'search'
+      text: 'Load Visual',
+      name: 'load'
     },
     {
       text: 'Information',
@@ -60,7 +63,10 @@ const $eng = {
       enable: 'Enable',
       disable: 'Disable'
     },
-    update: 'Check for update'
+    lastest: 'Lastest version'
+  },
+  info: {
+    introduce: 'Electron + Vue.js based data visualization tool'
   }
 }
 

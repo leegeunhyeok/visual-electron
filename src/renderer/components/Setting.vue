@@ -15,12 +15,12 @@
           {{ lang[$store.state.setting.lang]['settings']['fullscreen'][fullscreen] }}
         </div>
       </div>
-      <div id="check-update-area">
+      <div id="check-lastest-area">
         <div id="checking-image-area">
-          <img src="../assets/electron.png" class="rotate" v-show="checking">
+          <img src="../assets/electron.png">
         </div>
-        <div id="check-update-button" class="setting-button" @click="checkUpdate">
-          {{ lang[$store.state.setting.lang]['settings']['update'] }}
+        <div id="check-lastest-button" class="setting-button" @click="checkLastest">
+          {{ lang[$store.state.setting.lang]['settings']['lastest'] }}
         </div>
       </div>
     </div>
@@ -31,11 +31,6 @@
 export default {
   name: 'setting',
   props: ['lang'],
-  data () {
-    return {
-      checking: false
-    }
-  },
   computed: {
     fullscreen () {
       return this.$store.state.setting.fullscreen ? 'disable' : 'enable'
@@ -57,12 +52,9 @@ export default {
       this.$config.setConfig('Fullscreen', 'enable', status)
       this.$config.save()
     },
-    /* 업데이트 확인 */
-    checkUpdate () {
-      if (this.checking === false) {
-        this.checking = true
-        console.log('Check update')
-      }
+    /* 최신버전 링크 */
+    checkLastest () {
+      this.$electron.shell.openExternal('https://github.com/leegeunhyeok/visual-electron/releases/latest')
     }
   }
 }
@@ -118,7 +110,7 @@ export default {
   padding: 30px;
 }
 
-#check-update-area {
+#check-lastest-area {
   padding: 0 30px;
 }
 
@@ -128,23 +120,7 @@ export default {
   height: 128px;
 }
 
-.rotate {
-  animation: rotate 2s linear infinite;
-}
-
-@keyframes rotate {
-  0% {
-    opacity: 0.0;
-    transform: rotate(0deg)
-  }
-
-  100% {
-    opacity: 1.0;
-    transform: rotate(360deg)
-  }
-}
-
-#check-update-button {
+#check-lastest-button {
   margin-top: 24px;
 }
 

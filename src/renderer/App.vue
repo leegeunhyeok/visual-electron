@@ -67,10 +67,11 @@ export default {
     },
     /* Drawer 선택 메뉴에 알맞는 동작 */
     drawerMenu (name) {
-      if (name === 'setting') {
+      if (name === 'info') {
+        this.$router.push({name: 'info'})
+      } else if (name === 'setting') {
         this.$router.push({name: 'setting'})
       }
-
       this.drawerClose()
     }
   }
@@ -78,7 +79,14 @@ export default {
 </script>
 
 <style>
-@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro');
+@font-face {
+  font-family: "NanumSquareRound";
+  src:url('./assets/fonts/NanumSquareRoundR.eot');
+  src:url('./assets/fonts/NanumSquareRoundR.eot#iefix') format('embedded-opentype'),
+  url('./assets/fonts/NanumSquareRoundR.woff') format('woff'),
+  url('./assets/fonts/NanumSquareRoundR.ttf') format('truetype');
+  src:local(¡Ø), url('./assets/fonts/NanumSquareRoundR.woff') format('woff');
+}
 
 * {
   box-sizing: border-box;
@@ -102,7 +110,9 @@ html, body {
   color: #a2ecfb;
 }
 
-body { font-family: 'Source Sans Pro', sans-serif; }
+body { 
+  font-family: "NanumSquareRound";
+}
 
 #app {
   width: 100%;

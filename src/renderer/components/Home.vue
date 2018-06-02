@@ -14,12 +14,7 @@
 <script>
 export default {
   name: 'home',
-  props: ['lang'],
-  methods: {
-    open (link) {
-      this.$electron.shell.openExternal(link)
-    }
-  }
+  props: ['lang']
 }
 </script>
 

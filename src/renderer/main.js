@@ -1,4 +1,5 @@
 import Vue from 'vue'
+import Chart from 'chart.js'
 // import axios from 'axios'
 
 import App from './App'
@@ -13,6 +14,9 @@ if (!process.env.IS_WEB) Vue.use(require('vue-electron'))
 
 /* Config Manager */
 Vue.prototype.$config = new Config()
+
+/* Chart.js */
+Vue.prototype.$chart = Chart
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */
