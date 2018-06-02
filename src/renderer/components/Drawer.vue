@@ -1,10 +1,10 @@
 <template>
   <div id="drawer">
-    <div class="drawer-btn" v-for="menu in lang[$store.state.language.lang]['drawer']" :key="menu">
-      {{ menu }}
+    <div class="drawer-btn" v-for="menu in lang[$store.state.setting.lang]['drawer']" :key="menu.name" @click="$emit('clickMenu', menu.name)">
+      {{ menu.text }}
     </div>
-    <div id="drawer-setting" class="drawer-btn">
-      {{ lang[$store.state.language.lang]['setting'] }}
+    <div id="drawer-setting" class="drawer-btn" @click="$emit('clickMenu', 'setting')">
+      {{ lang[$store.state.setting.lang]['setting'] }}
     </div>
   </div>
 </template>
@@ -24,6 +24,7 @@ export default {
   top: 50px;
   width: 300px;
   height: calc(100% - 50px);
+  z-index: 9998;
 }
 
 .drawer-btn {

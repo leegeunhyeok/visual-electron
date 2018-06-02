@@ -1,20 +1,18 @@
 <template>
   <div id="app" class="main-background">
-    <div id="header">
-      <div id="drawer-open-icon" @click="drawerToggle">
-        <span class="horizontal-line-top"></span>
-        <span class="horizontal-line-middle"></span>
-        <span class="horizontal-line-bottom"></span>
+    <div id="main">
+      <div id="header">
+        <div id="drawer-open-icon" @click="drawerToggle">
+          <span class="horizontal-line-top"></span>
+          <span class="horizontal-line-middle"></span>
+          <span class="horizontal-line-bottom"></span>
+        </div>
       </div>
+      <transition name="drawer-slide" mode="in-out">
+        <drawer v-if="drawerOpen" :lang="lang" @clickMenu="drawerMenu"></drawer>
+      </transition>
+      <router-view @closeDrawer="drawerClose" :lang="lang"></router-view>
     </div>
-    <transition name="drawer-slide" mode="in-out">
-      <!-- TODO: Drawer 메뉴 클릭 시 해당 메뉴 데이터 받기 -->
-      <drawer v-if="drawerOpen" :lang="lang" @clickMenu="drawerMenu"></drawer>
-    </transition>
-    <transition>
-      <setting v-if="settingPopup"></setting>
-    </transition>
-    <router-view @closeDrawer="drawerClose" :lang="lang"></router-view>
   </div>
 </template>
 
@@ -22,7 +20,6 @@
 import Language from './model/LanguagePack.js'
 
 import Drawer from './components/Drawer.vue'
-import Setting from './components/Setting.vue'
 
 export default {
   name: 'visual-electron',
@@ -34,14 +31,12 @@ export default {
     }
   },
   components: {
-    'drawer': Drawer,
-    'setting': Setting
+    'drawer': Drawer
   },
   /* Config 파일 읽기 */
   created () {
-    const fs = require('fs')
-    const config = fs.readFileSync('./config/config.ini')
-    this.$store.commit('CHANGE_LANGUAGE', config)
+    this.$config.load()
+    this.$store.commit('CHANGE_LANGUAGE', this.$config.getConfig('Language', 'lang'))
   },
   methods: {
     /* Drawer 토글 */
@@ -71,8 +66,12 @@ export default {
       bottom.classList.remove('drawer-opend-bottom')
     },
     /* Drawer 선택 메뉴에 알맞는 동작 */
-    drawerMenu (e) {
-      console.log(e)
+    drawerMenu (name) {
+      if (name === 'setting') {
+        this.$router.push({name: 'setting'})
+      }
+
+      this.drawerClose()
     }
   }
 }
@@ -87,6 +86,10 @@ export default {
   padding: 0;
   cursor: default;
   user-select: none;
+}
+
+::-webkit-scrollbar { 
+  display: none; 
 }
 
 html, body {
@@ -113,6 +116,7 @@ body { font-family: 'Source Sans Pro', sans-serif; }
   height: 50px;
   top: 0;
   left: 0;
+  z-index: 9999;
 }
 
 .horizontal-line-top {
@@ -189,6 +193,19 @@ body { font-family: 'Source Sans Pro', sans-serif; }
 
 #drawer-open-icon:hover {
   background-color: #13141a;
+}
+
+#loading-area {
+  width: 100%;
+  height: 100%;
+}
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 0.5s
+}
+
+.fade-enter, .fade-leave-active {
+  opacity: 0
 }
 
 </style>

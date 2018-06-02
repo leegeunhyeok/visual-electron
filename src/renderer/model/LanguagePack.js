@@ -10,10 +10,28 @@
 const $kor = {
   greet: '반갑습니다',
   setting: '설정',
-  drawer: {
-    new: '새 비쥬얼 생성',
-    search: '검색',
-    info: '정보'
+  drawer: [
+    {
+      text: '새 비쥬얼 생성',
+      name: 'create'
+    },
+    {
+      text: '검색',
+      name: 'search'
+    },
+    {
+      text: '정보',
+      name: 'info'
+    }
+  ],
+  settings: {
+    language: '언어',
+    fullscreen: {
+      text: '전체 화면',
+      enable: '활성화',
+      disable: '비활성화'
+    },
+    update: '업데이트 확인'
   }
 }
 
@@ -21,14 +39,44 @@ const $kor = {
 const $eng = {
   greet: 'Welcome',
   setting: 'Setting',
-  drawer: {
-    new: 'Create new visual',
-    search: 'Search',
-    info: 'Information'
+  drawer: [
+    {
+      text: 'Create new visual',
+      name: 'create'
+    },
+    {
+      text: 'Search',
+      name: 'search'
+    },
+    {
+      text: 'Information',
+      name: 'info'
+    }
+  ],
+  settings: {
+    language: 'Lauguage',
+    fullscreen: {
+      text: 'Full screen',
+      enable: 'Enable',
+      disable: 'Disable'
+    },
+    update: 'Check for update'
   }
 }
 
 export default {
-  'kr': $kor,
-  'en': $eng
+  langs: [
+    {
+      lang: 'kr',
+      kr: '한국어',
+      en: 'Korean'
+    },
+    {
+      lang: 'en',
+      kr: '영어',
+      en: 'English'
+    }
+  ],
+  kr: $kor,
+  en: $eng
 }
