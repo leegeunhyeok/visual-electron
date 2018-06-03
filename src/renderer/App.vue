@@ -11,13 +11,14 @@
       <transition name="drawer-slide" mode="in-out">
         <drawer v-if="drawerOpen" :lang="lang" @clickMenu="drawerMenu"></drawer>
       </transition>
-      <router-view @closeDrawer="drawerClose" :lang="lang"></router-view>
+      <router-view @closeDrawer="drawerClose" :lang="lang" :charts="chartTypes"></router-view>
     </div>
   </div>
 </template>
 
 <script>
 import Language from './model/LanguagePack.js'
+import ChartTypes from './model/ChartTypes.js'
 
 import Drawer from './components/Drawer.vue'
 
@@ -26,6 +27,7 @@ export default {
   data () {
     return {
       lang: Language,
+      chartTypes: ChartTypes,
       drawerOpen: false,
       settingPopup: false
     }
@@ -67,7 +69,9 @@ export default {
     },
     /* Drawer 선택 메뉴에 알맞는 동작 */
     drawerMenu (name) {
-      if (name === 'info') {
+      if (name === 'create') {
+        this.$router.push({name: 'create'})
+      } else if (name === 'info') {
         this.$router.push({name: 'info'})
       } else if (name === 'setting') {
         this.$router.push({name: 'setting'})

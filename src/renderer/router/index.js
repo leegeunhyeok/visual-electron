@@ -11,6 +11,11 @@ export default new Router({
       component: require('@/components/Home').default
     },
     {
+      path: '/create',
+      name: 'create',
+      component: require('@/components/CreateVisual').default
+    },
+    {
       path: '/info',
       name: 'info',
       component: require('@/components/Information.vue').default

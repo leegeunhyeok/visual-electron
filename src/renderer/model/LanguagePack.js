@@ -31,11 +31,16 @@ const $kor = {
       enable: '활성화',
       disable: '비활성화'
     },
-    lastest: '최신 버전'
+    lastest: '최신 버전',
+    current: '현재 버전'
   },
   info: {
     introduce: 'Electron + Vue.js 기반의 데이터 시각화 도구입니다',
     system: '시스템 정보'
+  },
+  create: {
+    name: '비주얼 이름',
+    type: '차트 유형'
   }
 }
 
@@ -64,11 +69,16 @@ const $eng = {
       enable: 'Enable',
       disable: 'Disable'
     },
-    lastest: 'Lastest version'
+    lastest: 'Lastest version',
+    current: 'Current Version'
   },
   info: {
     introduce: 'Electron + Vue.js based data visualization tool',
     system: 'System Information'
+  },
+  create: {
+    name: 'Visual Name',
+    type: 'Chart type'
   }
 }
 

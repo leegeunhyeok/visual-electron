@@ -22,6 +22,9 @@
         <div id="check-lastest-button" class="setting-button" @click="checkLastest">
           {{ lang[$store.state.setting.lang]['settings']['lastest'] }}
         </div>
+        <div id="current-version">
+          {{ lang[$store.state.setting.lang]['settings']['current'] }}: 0.0.1
+        </div>
       </div>
     </div>
   </div>
@@ -122,6 +125,10 @@ export default {
 
 #check-lastest-button {
   margin-top: 24px;
+}
+
+#current-version {
+  font-weight: bold;
 }
 
 </style>
