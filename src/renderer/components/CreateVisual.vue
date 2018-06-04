@@ -21,7 +21,8 @@
 </template>
 
 <script>
-const ext = '.vev'
+/* 비주얼 파일 확장자 */
+const ext = '.vds'
 
 export default {
   name: 'create',
@@ -65,23 +66,26 @@ export default {
         const saveData = {
           'type': this.type
         }
+
+        /* Electron 다이얼로그 열기 */
         const dir = this.$electron.remote.dialog.showOpenDialog(
           {
             properties: ['openDirectory'],
-            title: 'Hello'
+            title: this.lang[this.$store.state.setting.lang]['create']['save']
           }
         )
 
-        /*  */
+        /* 파일 중복 확인 */
         const fs = require('fs')
         if (fs.existsSync(dir + '/' + this.visualName + ext)) {
-          console.log('파일이 이미 존재합니다.', this.visualName + ext)
+          this.$emit('openNotify', this.lang[this.$store.state.setting.lang]['create']['already'] + this.visualName + ext)
         } else {
           fs.writeFileSync(dir + '/' + this.visualName + ext, JSON.stringify(saveData))
+          this.$emit('openNotify', this.lang[this.$store.state.setting.lang]['create']['created'])
           this.$router.push({name: 'home'})
         }
       } else {
-        console.log('비주얼 이름과 타입을 입력해주세요')
+        this.$emit('openNotify', this.lang[this.$store.state.setting.lang]['create']['blank'])
       }
     }
   }

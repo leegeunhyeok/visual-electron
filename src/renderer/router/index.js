@@ -3,6 +3,7 @@ import Router from 'vue-router'
 
 Vue.use(Router)
 
+/* 라우터 설정 */
 export default new Router({
   routes: [
     {

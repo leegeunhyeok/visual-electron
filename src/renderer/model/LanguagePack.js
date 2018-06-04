@@ -41,7 +41,11 @@ const $kor = {
   create: {
     name: '비주얼 이름',
     type: '차트 유형',
-    submit: '비주얼 생성'
+    submit: '비주얼 생성',
+    already: '이미 파일이 존재합니다: ',
+    created: '새 비주얼이 생성되었습니다!',
+    blank: '비주얼 이름과 타입은 필수 항목입니다.',
+    save: '비주얼 파일 저장 디렉토리 선택'
   }
 }
 
@@ -80,7 +84,11 @@ const $eng = {
   create: {
     name: 'Visual Name',
     type: 'Chart type',
-    submit: 'Create Visual'
+    submit: 'Create Visual',
+    already: 'File already exists: ',
+    created: 'New visual Created!',
+    blank: 'Visual name and Type are required.',
+    save: 'Choose Visual file save directory'
   }
 }
 

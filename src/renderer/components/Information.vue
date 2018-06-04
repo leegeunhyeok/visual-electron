@@ -46,14 +46,21 @@ export default {
   props: ['lang'],
   data () {
     return {
+      /* 차트 인스턴스 */
       chart: null,
+      /* Electron 버전 */
       electron: process.versions['atom-shell'],
+      /* Node.js 버전 */
       node: process.versions.node,
+      /* 플랫폼 유형 */
       platform: require('os').platform(),
+      /* Vue.js 버전 */
       vue: require('vue/package.json').version
     }
   },
+  /* 마운트 후 */
   mounted () {
+    /* 예제 차트 생성 */
     const ctx = document.getElementById('sampleChart')
     this.chart = new this.$chart(ctx, {
       type: 'bar',
@@ -96,6 +103,7 @@ export default {
     this.randomData()
   },
   methods: {
+    /* 차트 랜덤 데이터 적용 */
     randomData () {
       setInterval(() => {
         for (let i = 0; i < 6; i++) {
@@ -109,6 +117,7 @@ export default {
         this.chart.update()
       }, 2500)
     },
+    /* 깃허브 링크 연결 */
     linkToGithub () {
       this.$electron.shell.openExternal('https://github.com/leegeunhyeok/visual-electron')
     }

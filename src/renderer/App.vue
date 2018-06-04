@@ -11,7 +11,10 @@
       <transition name="drawer-slide" mode="in-out">
         <drawer v-if="drawerOpen" :lang="lang" @clickMenu="drawerMenu"></drawer>
       </transition>
-      <router-view @closeDrawer="drawerClose" :lang="lang" :charts="chartTypes"></router-view>
+      <transition name="fade" mode="out-in">
+        <notify v-if="notifyOpen" :message="notifyMessage" :lang="lang" @closeNotify="closeNotify"></notify>
+      </transition>
+      <router-view @closeDrawer="drawerClose" @openNotify="openNotify" @fullscreen="activeFullscreen" :lang="lang" :charts="chartTypes"></router-view>
     </div>
   </div>
 </template>
@@ -21,24 +24,40 @@ import Language from './model/LanguagePack.js'
 import ChartTypes from './model/ChartTypes.js'
 
 import Drawer from './components/Drawer.vue'
+import Notify from './components/Notify.vue'
 
 export default {
   name: 'visual-electron',
   data () {
     return {
+      /* 언어 데이터 */
       lang: Language,
+      /* 차트 유형 예제 데이터 */
       chartTypes: ChartTypes,
+      /* Drawer 열림/닫힘 */
       drawerOpen: false,
-      settingPopup: false
+      /* 알림 보임/숨김 */
+      notifyOpen: false,
+      /* 알림 메시지 */
+      notifyMessage: ''
     }
   },
   components: {
-    'drawer': Drawer
+    /* Drawer 컴포넌트 */
+    'drawer': Drawer,
+    /* 알림 창 컴포넌트 */
+    'notify': Notify
   },
   /* Config 파일 읽기 */
   created () {
     this.$config.load()
+    /* Vuex에 설정값 저장 */
     this.$store.commit('CHANGE_LANGUAGE', this.$config.getConfig('Language', 'lang'))
+    this.$store.commit('CHANGE_FULLSCREEN', this.$config.getConfig('Fullscreen', 'enable'))
+  },
+  mounted () {
+    /* 마운트 완료 후 설정의 전체화면 여부 확인 및 활성화 */
+    this.activeFullscreen(this.$store.state.setting.fullscreen)
   },
   methods: {
     /* Drawer 토글 */
@@ -77,6 +96,29 @@ export default {
         this.$router.push({name: 'setting'})
       }
       this.drawerClose()
+    },
+    /* 알림 창 열기 */
+    openNotify (message) {
+      if (message === '') return
+
+      if (this.notifyOpen) {
+        this.closeNotify()
+        setTimeout(() => {
+          this.notifyMessage = message
+          this.notifyOpen = true
+        }, 500)
+      } else {
+        this.notifyMessage = message
+        this.notifyOpen = true
+      }
+    },
+    /* 알림 창 닫기 */
+    closeNotify () {
+      this.notifyOpen = false
+    },
+    /* 전체화면 설정 */
+    activeFullscreen (enable) {
+      this.$electron.remote.getCurrentWindow().setFullScreen(enable)
     }
   }
 }

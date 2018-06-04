@@ -23,7 +23,7 @@
           {{ lang[$store.state.setting.lang]['settings']['lastest'] }}
         </div>
         <div id="current-version">
-          {{ lang[$store.state.setting.lang]['settings']['current'] }}: 0.0.1
+          {{ lang[$store.state.setting.lang]['settings']['current'] }}: 0.0.2
         </div>
       </div>
     </div>
@@ -50,10 +50,10 @@ export default {
     toggleFullscreen () {
       let status = !this.$store.state.setting.fullscreen
       /* 데이터에 따라 전페화면, 기본화면 토글 */
-      this.$electron.remote.getCurrentWindow().setFullScreen(status)
       this.$store.commit('CHANGE_FULLSCREEN', status)
       this.$config.setConfig('Fullscreen', 'enable', status)
       this.$config.save()
+      this.$emit('fullscreen', status)
     },
     /* 최신버전 링크 */
     checkLastest () {

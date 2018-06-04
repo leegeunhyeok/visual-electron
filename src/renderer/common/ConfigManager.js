@@ -19,21 +19,26 @@ const $default = {
 }
 
 class Config {
+  /* 생성자 */
   constructor () {
     console.log('Created config manager instance.')
   }
 
   /* 설정 파일 읽고 JSON으로 변환 */
   load () {
+    /* 파일 존재 여부 */
     if (fs.existsSync($path)) {
       try {
+        /* 데이터 읽고 Json 형태로 형 변환 */
         this.config = JSON.parse(fs.readFileSync($path, 'utf-8'))
         console.log('Config loaded.')
       } catch (e) {
-        this.config = {}
+        /* 예외 발생 시 기본 설정으로 적용 */
+        this.config = $default
         console.log(e)
       }
     } else {
+      /* 설정 파일 또는 디렉토리가 없을 경우 새로 생성 */
       console.log('Create new config file.')
       this.config = $default
       this.createFile()
@@ -53,11 +58,12 @@ class Config {
   /* 새 설정 파일 생성 */
   createFile () {
     try {
-      /* 설정 파일 디렉토리가 존재하지 않을 경우 */
+      /* 설정 파일 디렉토리가 존재하지 않을 경우 디렉토리 생성 */
       if (!fs.existsSync($dir)) {
         console.log('Config directory is not exists.')
         fs.mkdirSync($dir)
       }
+      /* 파일 생성 */
       fs.openSync($path, 'w')
       console.log('Created new config file.')
 
