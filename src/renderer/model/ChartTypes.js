@@ -122,8 +122,8 @@ const $types = [
         ],
         labels: [
           'Red',
-          'Yellow',
-          'Blue'
+          'Blue',
+          'Yellow'
         ]
       }
     }
