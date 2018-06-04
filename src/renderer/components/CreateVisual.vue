@@ -1,7 +1,7 @@
 <template>
   <div id="create-visual" @click="$emit('closeDrawer')">
     <div id="visual-name-area">
-      <input id="visual-name" v-model="fileName" :placeholder="lang[$store.state.setting.lang]['create']['name']">
+      <input id="visual-name" v-model="visualName" :placeholder="lang[$store.state.setting.lang]['create']['name']">
     </div>
     <div id="visual-type-list">
       <select id="chart-types" v-model="type" @change="typeChanged">
@@ -12,16 +12,23 @@
     <div id="chart-type-area">
       <canvas id="chartType"></canvas>
     </div>
+    <div id="create-button-area">
+      <div id="visual-create-button" @click="onCreateVisual">
+        {{ lang[$store.state.setting.lang]['create']['submit'] }}
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
+const ext = '.vev'
+
 export default {
   name: 'create',
   props: ['lang', 'charts'],
   data () {
     return {
-      fileName: '',
+      visualName: '',
       type: '',
       chart: null
     }
@@ -52,6 +59,30 @@ export default {
 
       /* 차트 생성 */
       this.chart = new this.$chart(ctx, option)
+    },
+    onCreateVisual () {
+      if (this.visualName && this.type) {
+        const saveData = {
+          'type': this.type
+        }
+        const dir = this.$electron.remote.dialog.showOpenDialog(
+          {
+            properties: ['openDirectory'],
+            title: 'Hello'
+          }
+        )
+
+        /*  */
+        const fs = require('fs')
+        if (fs.existsSync(dir + '/' + this.visualName + ext)) {
+          console.log('파일이 이미 존재합니다.', this.visualName + ext)
+        } else {
+          fs.writeFileSync(dir + '/' + this.visualName + ext, JSON.stringify(saveData))
+          this.$router.push({name: 'home'})
+        }
+      } else {
+        console.log('비주얼 이름과 타입을 입력해주세요')
+      }
     }
   }
 }
@@ -105,7 +136,7 @@ export default {
 
 #chart-type-area {
   margin: auto;
-  margin-top: 4%;
+  margin-top: 6%;
   position: relative;
   width: 40%;
   height: 24vh;
@@ -113,9 +144,30 @@ export default {
 
 @media (min-width: 1200px) {
   #chart-type-area {
-    margin-top: 6%;
+    margin-top: 8%;
     width: 50%;
     height: 30vh;
   }
+}
+
+#create-button-area {
+  width: 100%;
+  text-align: center;
+}
+
+#visual-create-button {
+  position: absolute;
+  bottom: 50px;
+  left: 50%;
+  transform: translateX(-50%);
+  cursor: pointer;
+  background-color: #282a38;
+  border-radius: 5px;
+  padding: 10px 20px;
+  transition: .5s;
+}
+
+#visual-create-button:hover {
+  background-color: #1a1b24;
 }
 </style>

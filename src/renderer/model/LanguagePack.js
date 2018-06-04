@@ -40,7 +40,8 @@ const $kor = {
   },
   create: {
     name: '비주얼 이름',
-    type: '차트 유형'
+    type: '차트 유형',
+    submit: '비주얼 생성'
   }
 }
 
@@ -78,7 +79,8 @@ const $eng = {
   },
   create: {
     name: 'Visual Name',
-    type: 'Chart type'
+    type: 'Chart type',
+    submit: 'Create Visual'
   }
 }
 
