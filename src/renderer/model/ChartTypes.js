@@ -152,8 +152,8 @@ const $types = [
         ],
         labels: [
           'Red',
-          'Yellow',
-          'Blue'
+          'Blue',
+          'Yellow'
         ]
       }
     }
@@ -182,8 +182,8 @@ const $types = [
         ],
         labels: [
           'Red',
-          'Yellow',
-          'Blue'
+          'Blue',
+          'Yellow'
         ]
       }
     }
