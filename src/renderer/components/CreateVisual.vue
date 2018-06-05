@@ -24,6 +24,9 @@
 /* 차트 유형 및 임시 데이터 */
 import Types from '../model/ChartTypes.js'
 
+/* 차트 유형 및 임시 데이터 String */
+const TypesString = JSON.stringify(Types)
+
 /* 비주얼 파일 확장자 */
 const ext = '.vds'
 
@@ -32,10 +35,16 @@ export default {
   props: ['lang'],
   data () {
     return {
+      /* 비주얼 명 */
       visualName: '',
+      /* 차트 타입 */
       type: '',
+      /* 차트 유형 및 임시 데이터 */
       charts: Types,
-      chart: null
+      /* 차트 인스턴스 */
+      chart: null,
+      /* 차트 유형 및 임시 데이터 to String */
+      chartString: TypesString
     }
   },
   methods: {
@@ -51,11 +60,12 @@ export default {
       }
 
       /* 선택한 차트 불러오기 */
-      this.charts.forEach(chart => {
+      for (let chart of Types) {
         if (this.type === chart.name) {
           option = chart.option
+          break
         }
-      })
+      }
 
       /* 반응형 옵션 추가 */
       option.options = {
@@ -65,13 +75,26 @@ export default {
       /* 차트 생성 */
       this.chart = new this.$chart(ctx, option)
     },
+    /* 비주얼 생성 버튼 이벤트 */
     onCreateVisual () {
       if (this.visualName && this.type) {
+        /* String to JSON */
+        const sample = JSON.parse(TypesString)
+        let option = {}
+
+        /* 현재 선택한 차트의 옵션 선택 */
+        for (let chart of sample) {
+          if (this.type === chart.name) {
+            option = chart.option
+            break
+          }
+        }
+
         /* 저장할 데이터 */
         const saveData = {
           type: this.type,
           /* TODO: 선택한 차트 옵션값으로 지정하기 */
-          chart: this.charts[0].option
+          chart: option
         }
 
         /* Electron 다이얼로그 열기 */
@@ -82,8 +105,10 @@ export default {
           }
         )
 
-        /* 파일 중복 확인 */
+        /* 저장 파일 명 */
         const filename = this.visualName + ext
+
+        /* 파일 중복 확인 */
         const fs = require('fs')
         if (fs.existsSync(dir + '/' + filename)) {
           this.$emit('openNotify', this.lang[this.$store.state.setting.lang]['create']['already'] + filename)

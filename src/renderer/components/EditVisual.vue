@@ -35,7 +35,7 @@ export default {
   },
   mounted () {
     const ctx = document.getElementById('chart')
-    this.chart = new this.$chart(ctx, this.visual.option)
+    this.chart = new this.$chart(ctx, this.visual.chart)
   }
 }
 </script>
