@@ -14,14 +14,13 @@
       <transition name="fade" mode="out-in">
         <notify v-if="notifyOpen" :message="notifyMessage" :lang="lang" @closeNotify="closeNotify"></notify>
       </transition>
-      <router-view @closeDrawer="drawerClose" @openNotify="openNotify" @fullscreen="activeFullscreen" :lang="lang" :charts="chartTypes"></router-view>
+      <router-view @closeDrawer="drawerClose" @openNotify="checkNotify" @fullscreen="activeFullscreen" :lang="lang"></router-view>
     </div>
   </div>
 </template>
 
 <script>
 import Language from './model/LanguagePack.js'
-import ChartTypes from './model/ChartTypes.js'
 
 import Drawer from './components/Drawer.vue'
 import Notify from './components/Notify.vue'
@@ -32,8 +31,6 @@ export default {
     return {
       /* 언어 데이터 */
       lang: Language,
-      /* 차트 유형 예제 데이터 */
-      chartTypes: ChartTypes,
       /* Drawer 열림/닫힘 */
       drawerOpen: false,
       /* 알림 보임/숨김 */
@@ -97,20 +94,31 @@ export default {
       }
       this.drawerClose()
     },
-    /* 알림 창 열기 */
-    openNotify (message) {
-      if (message === '') return
+    /* 알림이 있는지 확인 */
+    checkNotify (message) {
+      /* 빈 메시지일 경우 알림창 열지 않음 */
+      if (message === '') {
+        return
+      }
 
+      /* 알림이 이미 있을 경우 기존 알림 닫고 0.5초 뒤 생성 */
       if (this.notifyOpen) {
         this.closeNotify()
         setTimeout(() => {
-          this.notifyMessage = message
-          this.notifyOpen = true
+          this.openNotify(message)
         }, 500)
       } else {
-        this.notifyMessage = message
-        this.notifyOpen = true
+        this.openNotify(message)
       }
+    },
+    /* 알림 창 열기 */
+    openNotify (message) {
+      this.notifyMessage = message
+      this.notifyOpen = true
+      /* 5초 뒤 알림 닫기 */
+      setTimeout(() => {
+        this.notifyOpen = false
+      }, 5000)
     },
     /* 알림 창 닫기 */
     closeNotify () {

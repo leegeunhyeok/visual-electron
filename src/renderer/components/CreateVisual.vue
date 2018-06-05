@@ -21,16 +21,20 @@
 </template>
 
 <script>
+/* 차트 유형 및 임시 데이터 */
+import Types from '../model/ChartTypes.js'
+
 /* 비주얼 파일 확장자 */
 const ext = '.vds'
 
 export default {
   name: 'create',
-  props: ['lang', 'charts'],
+  props: ['lang'],
   data () {
     return {
       visualName: '',
       type: '',
+      charts: Types,
       chart: null
     }
   },
@@ -63,8 +67,11 @@ export default {
     },
     onCreateVisual () {
       if (this.visualName && this.type) {
+        /* 저장할 데이터 */
         const saveData = {
-          'type': this.type
+          type: this.type,
+          /* TODO: 선택한 차트 옵션값으로 지정하기 */
+          chart: this.charts[0].option
         }
 
         /* Electron 다이얼로그 열기 */
@@ -76,13 +83,16 @@ export default {
         )
 
         /* 파일 중복 확인 */
+        const filename = this.visualName + ext
         const fs = require('fs')
-        if (fs.existsSync(dir + '/' + this.visualName + ext)) {
-          this.$emit('openNotify', this.lang[this.$store.state.setting.lang]['create']['already'] + this.visualName + ext)
+        if (fs.existsSync(dir + '/' + filename)) {
+          this.$emit('openNotify', this.lang[this.$store.state.setting.lang]['create']['already'] + filename)
         } else {
-          fs.writeFileSync(dir + '/' + this.visualName + ext, JSON.stringify(saveData))
+          fs.writeFileSync(dir + '/' + filename, JSON.stringify(saveData))
+          this.$store.commit('SET_FILE_NAME', filename)
+          this.$store.commit('SET_FILE_DIR', dir)
           this.$emit('openNotify', this.lang[this.$store.state.setting.lang]['create']['created'])
-          this.$router.push({name: 'home'})
+          this.$router.push({name: 'edit'})
         }
       } else {
         this.$emit('openNotify', this.lang[this.$store.state.setting.lang]['create']['blank'])

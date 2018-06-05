@@ -17,6 +17,11 @@ export default new Router({
       component: require('@/components/CreateVisual').default
     },
     {
+      path: '/edit',
+      name: 'edit',
+      component: require('@/components/EditVisual').default
+    },
+    {
       path: '/info',
       name: 'info',
       component: require('@/components/Information.vue').default

@@ -10,6 +10,7 @@
 const $kor = {
   greet: '반갑습니다',
   setting: '설정',
+  openErr: '파일을 여는 중 오류가 발생하였습니다',
   drawer: [
     {
       text: '새 비주얼 생성',
@@ -44,7 +45,7 @@ const $kor = {
     submit: '비주얼 생성',
     already: '이미 파일이 존재합니다: ',
     created: '새 비주얼이 생성되었습니다!',
-    blank: '비주얼 이름과 타입은 필수 항목입니다.',
+    blank: '비주얼 이름과 타입은 필수 항목입니다',
     save: '비주얼 파일 저장 디렉토리 선택'
   }
 }
@@ -53,6 +54,7 @@ const $kor = {
 const $eng = {
   greet: 'Welcome',
   setting: 'Setting',
+  openErr: 'Open file error',
   drawer: [
     {
       text: 'Create new Visual',
@@ -87,7 +89,7 @@ const $eng = {
     submit: 'Create Visual',
     already: 'File already exists: ',
     created: 'New visual Created!',
-    blank: 'Visual name and Type are required.',
+    blank: 'Visual name and Type are required',
     save: 'Choose Visual file save directory'
   }
 }
