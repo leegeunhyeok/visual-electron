@@ -1,10 +1,20 @@
 <template>
   <div id="drawer">
-    <div class="drawer-btn" v-for="menu in lang[$store.state.setting.lang]['drawer']" :key="menu.name" @click="$emit('clickMenu', menu.name)">
-      {{ menu.text }}
+    <div v-if="$store.state.drawer.edit">
+      <div class="drawer-btn" v-for="menu in lang[$store.state.setting.lang]['drawer']['edit']" :key="menu.name" @click="$emit('clickEditMenu', menu.name)">
+        {{ menu.text }}
+      </div>
+      <div class="drawer-btn drawer-bottom" @click="$emit('clickEditMenu', 'home')">
+        {{ lang[$store.state.setting.lang]['home'] }}
+      </div>
     </div>
-    <div id="drawer-setting" class="drawer-btn" @click="$emit('clickMenu', 'setting')">
-      {{ lang[$store.state.setting.lang]['setting'] }}
+    <div v-else>
+      <div class="drawer-btn" v-for="menu in lang[$store.state.setting.lang]['drawer']['default']" :key="menu.name" @click="$emit('clickMenu', menu.name)">
+        {{ menu.text }}
+      </div>
+      <div class="drawer-btn drawer-bottom" @click="$emit('clickMenu', 'setting')">
+        {{ lang[$store.state.setting.lang]['setting'] }}
+      </div>
     </div>
   </div>
 </template>
@@ -41,7 +51,7 @@ export default {
   background-color: #282a38;
 }
 
-#drawer-setting {
+.drawer-bottom {
   border-top: 1px solid #21222e;
   position: absolute;
   bottom: 0px;

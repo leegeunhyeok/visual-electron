@@ -20,6 +20,7 @@ export default {
     }
   },
   created () {
+    this.$store.commit('CHANGE_EDIT_STATUS', true)
     try {
       this.fileDir = this.$store.state.file.fileDir
       const fs = require('fs')

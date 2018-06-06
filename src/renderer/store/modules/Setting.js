@@ -1,5 +1,7 @@
 const state = {
+  /* 프로그램 언어 */
   lang: 'en',
+  /* 전체화면 여부 */
   fullscreen: false
 }
 

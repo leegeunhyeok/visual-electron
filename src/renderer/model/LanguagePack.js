@@ -11,21 +11,30 @@ const $kor = {
   greet: '반갑습니다',
   load: '비주얼 파일 불러오기',
   setting: '설정',
+  home: '홈으로 가기',
   openErr: '파일을 여는 중 오류가 발생하였습니다',
-  drawer: [
-    {
-      text: '새 비주얼 생성',
-      name: 'create'
-    },
-    {
-      text: '비주얼 불러오기',
-      name: 'load'
-    },
-    {
-      text: '정보',
-      name: 'info'
-    }
-  ],
+  drawer: {
+    default: [
+      {
+        text: '새 비주얼 생성',
+        name: 'create'
+      },
+      {
+        text: '비주얼 불러오기',
+        name: 'load'
+      },
+      {
+        text: '정보',
+        name: 'info'
+      }
+    ],
+    edit: [
+      {
+        text: '저장',
+        name: 'save'
+      }
+    ]
+  },
   settings: {
     language: '언어',
     fullscreen: {
@@ -56,21 +65,30 @@ const $eng = {
   greet: 'Welcome',
   load: 'Visual file load',
   setting: 'Setting',
+  home: 'Go to home',
   openErr: 'Open file error',
-  drawer: [
-    {
-      text: 'Create new Visual',
-      name: 'create'
-    },
-    {
-      text: 'Load Visual',
-      name: 'load'
-    },
-    {
-      text: 'Information',
-      name: 'info'
-    }
-  ],
+  drawer: {
+    default: [
+      {
+        text: 'Create new Visual',
+        name: 'create'
+      },
+      {
+        text: 'Load Visual',
+        name: 'load'
+      },
+      {
+        text: 'Information',
+        name: 'info'
+      }
+    ],
+    edit: [
+      {
+        text: 'Save',
+        name: 'save'
+      }
+    ]
+  },
   settings: {
     language: 'Lauguage',
     fullscreen: {

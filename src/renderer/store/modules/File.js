@@ -1,4 +1,5 @@
 const state = {
+  /* 현재 선택된 파일 */
   fileDir: ''
 }
 

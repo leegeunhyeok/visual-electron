@@ -9,7 +9,7 @@
         </div>
       </div>
       <transition name="drawer-slide" mode="in-out">
-        <drawer v-if="drawerOpen" :lang="lang" @clickMenu="drawerMenu"></drawer>
+        <drawer v-if="drawerOpen" :lang="lang" @clickMenu="drawerMenu" @clickEditMenu="editMenu"></drawer>
       </transition>
       <transition name="fade" mode="out-in">
         <notify v-if="notifyOpen" :message="notifyMessage" :lang="lang" @closeNotify="closeNotify"></notify>
@@ -111,6 +111,16 @@ export default {
         this.$router.push({name: 'info'})
       } else if (name === 'setting') {
         this.$router.push({name: 'setting'})
+      }
+      this.drawerClose()
+    },
+    /* Edit 상태의 Drawer 선택 메뉴에 알맞는 동작 */
+    editMenu (name) {
+      if (name === 'save') {
+        console.log('save')
+      } else if (name === 'home') {
+        this.$store.commit('CHANGE_EDIT_STATUS', false)
+        this.$router.push({name: 'home'})
       }
       this.drawerClose()
     },
