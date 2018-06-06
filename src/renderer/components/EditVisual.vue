@@ -1,6 +1,6 @@
 <template>
   <div id="visual-edit">
-    <div>{{ $store.state.file.fileName }}</div>
+    <div>{{ $store.state.file.fileDir }}</div>
     <div id="edit-chart-area">
       <canvas id="chart"></canvas>
     </div>
@@ -14,7 +14,6 @@ export default {
   data () {
     return {
       fileDir: '',
-      fileName: '',
       visual: {},
       option: {},
       chart: null
@@ -23,9 +22,8 @@ export default {
   created () {
     try {
       this.fileDir = this.$store.state.file.fileDir
-      this.fileName = this.$store.state.file.fileName
       const fs = require('fs')
-      const visual = fs.readFileSync(this.fileDir + '/' + this.fileName, 'utf-8')
+      const visual = fs.readFileSync(this.fileDir, 'utf-8')
       this.visual = JSON.parse(visual)
     } catch (e) {
       console.log(e)

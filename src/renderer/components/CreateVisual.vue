@@ -78,25 +78,6 @@ export default {
     /* 비주얼 생성 버튼 이벤트 */
     onCreateVisual () {
       if (this.visualName && this.type) {
-        /* String to JSON */
-        const sample = JSON.parse(TypesString)
-        let option = {}
-
-        /* 현재 선택한 차트의 옵션 선택 */
-        for (let chart of sample) {
-          if (this.type === chart.name) {
-            option = chart.option
-            break
-          }
-        }
-
-        /* 저장할 데이터 */
-        const saveData = {
-          type: this.type,
-          /* TODO: 선택한 차트 옵션값으로 지정하기 */
-          chart: option
-        }
-
         /* Electron 다이얼로그 열기 */
         const dir = this.$electron.remote.dialog.showOpenDialog(
           {
@@ -105,19 +86,40 @@ export default {
           }
         )
 
-        /* 저장 파일 명 */
-        const filename = this.visualName + ext
+        /* 선택한 디렉토리가 존재 할 경우 */
+        if (dir) {
+          /* String to JSON */
+          const sample = JSON.parse(TypesString)
+          let option = {}
 
-        /* 파일 중복 확인 */
-        const fs = require('fs')
-        if (fs.existsSync(dir + '/' + filename)) {
-          this.$emit('openNotify', this.lang[this.$store.state.setting.lang]['create']['already'] + filename)
-        } else {
-          fs.writeFileSync(dir + '/' + filename, JSON.stringify(saveData))
-          this.$store.commit('SET_FILE_NAME', filename)
-          this.$store.commit('SET_FILE_DIR', dir)
-          this.$emit('openNotify', this.lang[this.$store.state.setting.lang]['create']['created'])
-          this.$router.push({name: 'edit'})
+          /* 현재 선택한 차트의 옵션 선택 */
+          for (let chart of sample) {
+            if (this.type === chart.name) {
+              option = chart.option
+              break
+            }
+          }
+
+          /* 저장할 데이터 */
+          const saveData = {
+            type: this.type,
+            /* TODO: 선택한 차트 옵션값으로 지정하기 */
+            chart: option
+          }
+
+          /* 저장 파일 명 */
+          const filename = this.visualName + ext
+
+          /* 파일 중복 확인 */
+          const fs = require('fs')
+          if (fs.existsSync(dir + '/' + filename)) {
+            this.$emit('openNotify', this.lang[this.$store.state.setting.lang]['create']['already'] + filename)
+          } else {
+            fs.writeFileSync(dir + '/' + filename, JSON.stringify(saveData))
+            this.$store.commit('SET_FILE_DIR', dir + '/' + filename)
+            this.$emit('openNotify', this.lang[this.$store.state.setting.lang]['create']['created'])
+            this.$router.push({name: 'edit'})
+          }
         }
       } else {
         this.$emit('openNotify', this.lang[this.$store.state.setting.lang]['create']['blank'])

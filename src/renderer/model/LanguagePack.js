@@ -9,6 +9,7 @@
 /* Korean */
 const $kor = {
   greet: '반갑습니다',
+  load: '비주얼 파일 불러오기',
   setting: '설정',
   openErr: '파일을 여는 중 오류가 발생하였습니다',
   drawer: [
@@ -53,6 +54,7 @@ const $kor = {
 /* English */
 const $eng = {
   greet: 'Welcome',
+  load: 'Visual file load',
   setting: 'Setting',
   openErr: 'Open file error',
   drawer: [

@@ -87,6 +87,26 @@ export default {
     drawerMenu (name) {
       if (name === 'create') {
         this.$router.push({name: 'create'})
+      } else if (name === 'load') {
+        /* Electron 다이얼로그 열기 */
+        const dir = this.$electron.remote.dialog.showOpenDialog(
+          {
+            properties: ['openFile'],
+            filters: [
+              {
+                name: 'Visual Data Set',
+                extensions: ['vds']
+              }
+            ],
+            title: this.lang[this.$store.state.setting.lang]['load']
+          }
+        )
+
+        /* 선택된 파일이 존재 할 경우 */
+        if (dir) {
+          this.$store.commit('SET_FILE_DIR', dir.pop())
+          this.$router.push({name: 'edit'})
+        }
       } else if (name === 'info') {
         this.$router.push({name: 'info'})
       } else if (name === 'setting') {
