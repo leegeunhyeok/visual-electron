@@ -111,14 +111,18 @@ export default {
           const filename = this.visualName + ext
 
           /* 파일 중복 확인 */
-          const fs = require('fs')
-          if (fs.existsSync(dir + '/' + filename)) {
-            this.$emit('openNotify', this.lang[this.$store.state.setting.lang]['create']['already'] + filename)
-          } else {
-            fs.writeFileSync(dir + '/' + filename, JSON.stringify(saveData))
-            this.$store.commit('SET_FILE_DIR', dir + '/' + filename)
-            this.$emit('openNotify', this.lang[this.$store.state.setting.lang]['create']['created'])
-            this.$router.push({name: 'edit'})
+          try {
+            const fs = require('fs')
+            if (fs.existsSync(dir + '/' + filename)) {
+              this.$emit('openNotify', this.lang[this.$store.state.setting.lang]['create']['already'] + filename)
+            } else {
+              fs.writeFileSync(dir + '/' + filename, JSON.stringify(saveData))
+              this.$store.commit('SET_FILE_DIR', dir + '/' + filename)
+              this.$emit('openNotify', this.lang[this.$store.state.setting.lang]['create']['created'])
+              this.$router.push({name: 'edit'})
+            }
+          } catch (e) {
+            this.$emit('openNotify', this.lang[this.$store.state.setting.lang]['saveErr'])
           }
         }
       } else {

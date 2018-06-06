@@ -13,7 +13,7 @@
     <transition name="fade" mode="out-in">
       <notify v-if="notifyOpen" :message="notifyMessage" :lang="lang" @closeNotify="closeNotify"></notify>
     </transition>
-    <router-view @closeDrawer="drawerClose" @openNotify="checkNotify" @fullscreen="activeFullscreen" :lang="lang"></router-view>
+    <router-view @closeDrawer="drawerClose" @openNotify="checkNotify" @fullscreen="activeFullscreen" :lang="lang" ref="edit"></router-view>
   </div>
 </template>
 
@@ -115,7 +115,7 @@ export default {
     /* Edit 상태의 Drawer 선택 메뉴에 알맞는 동작 */
     editMenu (name) {
       if (name === 'save') {
-        console.log('save')
+        this.$store.commit('SET_SAVE_STATUS', true)
       } else if (name === 'home') {
         this.$store.commit('CHANGE_EDIT_STATUS', false)
         this.$router.push({name: 'home'})
