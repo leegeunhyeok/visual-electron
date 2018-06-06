@@ -1,8 +1,10 @@
 <template>
   <div id="visual-edit">
-    <div>{{ $store.state.file.fileDir }}</div>
     <div id="edit-chart-area">
       <canvas id="chart"></canvas>
+    </div>
+    <div id="edit-area">
+      Edit area
     </div>
   </div>
 </template>
@@ -43,6 +45,23 @@ export default {
 
 #visual-edit {
   padding-top: 50px;
+  background-color: #2f3242;
+  height: 100%;
+}
+
+#edit-chart-area {
+  margin: auto;
+  margin-top: 25px;
+  width: 90%;
+}
+
+#edit-area {
+  position: absolute;
+  border-top: 1px solid #4b506a;
+  background-color: #2f3242;
+  width: 100%;
+  padding: 10px 20px;
+  bottom: 0;
 }
 
 </style>

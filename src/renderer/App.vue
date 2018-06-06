@@ -1,21 +1,19 @@
 <template>
   <div id="app" class="main-background">
-    <div id="main">
-      <div id="header">
-        <div id="drawer-open-icon" @click="drawerToggle">
-          <span class="horizontal-line-top"></span>
-          <span class="horizontal-line-middle"></span>
-          <span class="horizontal-line-bottom"></span>
-        </div>
+    <div id="header">
+      <div id="drawer-open-icon" @click="drawerToggle">
+        <span class="horizontal-line-top"></span>
+        <span class="horizontal-line-middle"></span>
+        <span class="horizontal-line-bottom"></span>
       </div>
-      <transition name="drawer-slide" mode="in-out">
-        <drawer v-if="drawerOpen" :lang="lang" @clickMenu="drawerMenu" @clickEditMenu="editMenu"></drawer>
-      </transition>
-      <transition name="fade" mode="out-in">
-        <notify v-if="notifyOpen" :message="notifyMessage" :lang="lang" @closeNotify="closeNotify"></notify>
-      </transition>
-      <router-view @closeDrawer="drawerClose" @openNotify="checkNotify" @fullscreen="activeFullscreen" :lang="lang"></router-view>
     </div>
+    <transition name="drawer-slide" mode="in-out">
+      <drawer v-if="drawerOpen" :lang="lang" @clickMenu="drawerMenu" @clickEditMenu="editMenu"></drawer>
+    </transition>
+    <transition name="fade" mode="out-in">
+      <notify v-if="notifyOpen" :message="notifyMessage" :lang="lang" @closeNotify="closeNotify"></notify>
+    </transition>
+    <router-view @closeDrawer="drawerClose" @openNotify="checkNotify" @fullscreen="activeFullscreen" :lang="lang"></router-view>
   </div>
 </template>
 
