@@ -14,6 +14,7 @@ const $kor = {
   home: '홈으로 가기',
   openErr: '파일을 여는 중 오류가 발생하였습니다',
   saveErr: '파일을 저장하는 중 오류가 발생하였습니다',
+  save: '저장되었습니다',
   drawer: {
     default: [
       {
@@ -69,6 +70,7 @@ const $eng = {
   home: 'Go to home',
   openErr: 'Open file error',
   saveErr: 'Save file error',
+  save: 'Saved',
   drawer: {
     default: [
       {
