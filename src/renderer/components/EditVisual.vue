@@ -157,7 +157,7 @@ export default {
   width: 100%;
   height: 15%;
   cursor: pointer;
-  color: #8e93af;
+  color: #a2ecfb;
   background-color: #444960;
   border: 1px solid #8e93af;
   transition: .5s;
@@ -166,7 +166,7 @@ export default {
 #edit-text-apply:hover {
   background-color: #1a1b24;
   border: 1px solid #a2ecfb;
-  color: #a2ecfb;
+  
 }
 
 </style>
