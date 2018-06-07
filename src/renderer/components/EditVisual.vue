@@ -166,7 +166,6 @@ export default {
 #edit-text-apply:hover {
   background-color: #1a1b24;
   border: 1px solid #a2ecfb;
-  
 }
 
 </style>
