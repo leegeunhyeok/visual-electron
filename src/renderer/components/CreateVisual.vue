@@ -67,11 +67,6 @@ export default {
         }
       }
 
-      /* 반응형 옵션 추가 */
-      option.options = {
-        responsive: true
-      }
-
       /* 차트 생성 */
       this.chart = new this.$chart(ctx, option)
     },
@@ -139,6 +134,7 @@ export default {
   display: inline-block;
   padding-top: 100px;
   width: 100%;
+  height: 100%;
   background-color: #2f3242;
 }
 
@@ -184,15 +180,7 @@ export default {
   margin-top: 6%;
   position: relative;
   width: 40%;
-  height: 24vh;
-}
-
-@media (min-width: 1200px) {
-  #chart-type-area {
-    margin-top: 8%;
-    width: 50%;
-    height: 30vh;
-  }
+  height: 40%;
 }
 
 #create-button-area {

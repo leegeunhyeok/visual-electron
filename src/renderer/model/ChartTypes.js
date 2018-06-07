@@ -32,6 +32,10 @@ const $types = [
             fill: false
           }
         ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false
       }
     }
   },
@@ -59,6 +63,10 @@ const $types = [
             borderWidth: 3
           }
         ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false
       }
     }
   },
@@ -95,6 +103,10 @@ const $types = [
             data: [2, 3, 7, 1]
           }
         ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false
       }
     }
   },
@@ -125,6 +137,10 @@ const $types = [
           'Blue',
           'Yellow'
         ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false
       }
     }
   },
@@ -155,6 +171,10 @@ const $types = [
           'Blue',
           'Yellow'
         ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false
       }
     }
   },
@@ -185,6 +205,10 @@ const $types = [
           'Blue',
           'Yellow'
         ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false
       }
     }
   },
@@ -213,6 +237,10 @@ const $types = [
           backgroundColor: 'rgba(162, 236, 251, 0.2)',
           borderColor: 'rgba(162, 236, 251, 1)'
         }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false
       }
     }
   },
@@ -254,6 +282,10 @@ const $types = [
             }]
           }
         ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false
       }
     }
   }

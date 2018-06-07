@@ -43,6 +43,7 @@ export default {
       this.visual = JSON.parse(visual)
       this.option = JSON.stringify(this.visual.chart)
       this.$store.commit('CHANGE_EDIT_STATUS', true)
+      console.log(this.option)
     } catch (e) {
       console.log(e)
       this.$emit('openNotify', this.lang[this.$store.state.setting.lang]['openErr'])
@@ -80,13 +81,15 @@ export default {
 #visual-edit {
   padding-top: 50px;
   background-color: #2f3242;
+  width: 100%;
   height: 100%;
 }
 
 #edit-chart-area {
   margin: auto;
   margin-top: 25px;
-  width: 90%;
+  width: 80%;
+  height: 60%;
 }
 
 #edit-area {
@@ -94,6 +97,7 @@ export default {
   border-top: 1px solid #4b506a;
   background-color: #2f3242;
   width: 100%;
+  height: 30%;
   padding: 10px 20px;
   bottom: 0;
 }
