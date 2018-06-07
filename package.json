@@ -1,6 +1,6 @@
 {
   "name": "visual-electron",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "author": "Leegeunhyeok <lghlove0509@naver.com>",
   "description": "Electron + Vue.js based data visualization tool",
   "license": "MIT",

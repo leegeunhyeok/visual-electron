@@ -23,7 +23,7 @@
           {{ lang[$store.state.setting.lang]['settings']['lastest'] }}
         </div>
         <div id="current-version">
-          {{ lang[$store.state.setting.lang]['settings']['current'] }}: 0.0.3
+          {{ lang[$store.state.setting.lang]['settings']['current'] }}: 0.0.4
         </div>
       </div>
     </div>
