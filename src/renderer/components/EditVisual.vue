@@ -4,7 +4,22 @@
       <canvas id="chart"></canvas>
     </div>
     <div id="edit-area">
-      <div id="edit-control-area">Control</div>
+      <div id="edit-control-area">
+        <button @click="toggleBackground" class="button white-toggle">
+          {{ lang[$store.state.setting.lang]['background'][background] }}
+        </button>
+        <select class="select">
+          <option v-for="(prop, i) in properties[optionObject.type]" :key="i">
+            {{ lang[$store.state.setting.lang]['props'][prop.name] }}
+          </option>
+        </select>
+        <select class="select" v-model="label" @change="changeLabel">
+          <option v-for="data in optionObject.data.labels" :key="data">
+            {{ data }}
+          </option>
+          <option value="add"> {{ lang[$store.state.setting.lang]['add'] }} </option>
+        </select>
+      </div>
       <div id="edit">
         <textarea id="edit-text-area" v-model="option"></textarea>
         <button id="edit-text-apply" @click="apply">
@@ -16,6 +31,8 @@
 </template>
 
 <script>
+import Properties from '../model/DatasetProp.js'
+
 export default {
   name: 'edit',
   props: ['lang'],
@@ -28,12 +45,21 @@ export default {
       /* 차트 옵션 문자열(순환참조 오류 방지) */
       option: '',
       /* Chart.js 인스턴스 */
-      chart: null
+      chart: null,
+      /* 차트별 프로퍼티 */
+      properties: Properties,
+      /* 배경 색 */
+      background: 0,
+      /* 선택 레이블 */
+      label: ''
     }
   },
   computed: {
     save () {
       return this.$store.state.file.save
+    },
+    optionObject () {
+      return JSON.parse(this.option)
     }
   },
   watch: {
@@ -49,7 +75,6 @@ export default {
       this.visual = JSON.parse(visual)
       this.option = JSON.stringify(this.visual.chart, null, 1)
       this.$store.commit('CHANGE_EDIT_STATUS', true)
-      console.log(this.option)
     } catch (e) {
       console.log(e)
       this.$emit('openNotify', this.lang[this.$store.state.setting.lang]['openErr'])
@@ -63,6 +88,24 @@ export default {
     this.chart = new this.$chart(ctx, this.visual.chart)
   },
   methods: {
+    /* 레이블 변경 */
+    changeLabel () {
+      console.log(this.label)
+      if (this.label === 'add') {
+        console.log('추가')
+      }
+    },
+    /* 배경색 토글 */
+    toggleBackground () {
+      this.background = this.background === 0 ? 1 : 0
+      let area = document.getElementById('edit-chart-area')
+      if (this.background === 1) {
+        area.classList.add('white-background')
+      } else {
+        area.classList.remove('white-background')
+      }
+    },
+    /* 비주얼 저장 */
     saveVisual (save) {
       this.$store.commit('SET_SAVE_STATUS', false)
       try {
@@ -78,19 +121,25 @@ export default {
         this.$emit('openNotify', this.lang[this.$store.state.setting.lang]['saveErr'])
       }
     },
+    /* 옵션 적용 */
     apply () {
-      /* 옵션 String To JSON */
-      const option = JSON.parse(this.option)
-      const ctx = document.getElementById('chart')
-      const context = ctx.getContext('2d')
-      context.clearRect(0, 0, ctx.width, ctx.height)
+      try {
+        /* 옵션 String To JSON */
+        const option = JSON.parse(this.option)
+        const ctx = document.getElementById('chart')
+        const context = ctx.getContext('2d')
+        context.clearRect(0, 0, ctx.width, ctx.height)
 
-      /* 기존의 차트 삭제 */
-      if (this.chart !== null) {
-        this.chart.destroy()
+        /* 기존의 차트 삭제 */
+        if (this.chart !== null) {
+          this.chart.destroy()
+        }
+        /* 차트 새로 생성 */
+        this.chart = new this.$chart(ctx, option)
+      } catch (e) {
+        console.log(e)
+        this.$emit('openNotify', this.lang[this.$store.state.setting.lang]['applyErr'])
       }
-      /* 차트 새로 생성 */
-      this.chart = new this.$chart(ctx, option)
     }
   }
 }
@@ -166,6 +215,28 @@ export default {
 #edit-text-apply:hover {
   background-color: #1a1b24;
   border: 1px solid #a2ecfb;
+}
+
+.white-background {
+  background-color: #ffffff;
+}
+
+.white-toggle {
+  float: right;
+  margin: 0;
+}
+
+.select {
+  font-family: "NanumSquareRound";
+  margin: 0;
+  margin-right: 10px;
+  float: left;
+  background-color: #444960;
+  outline: none;
+  border: 1px solid #a2ecfb;
+  color: #a2ecfb;
+  padding: 5px;
+  font-size: 1.1rem;
 }
 
 </style>
