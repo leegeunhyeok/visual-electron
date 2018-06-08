@@ -136,6 +136,9 @@ export default {
         }
         /* 차트 새로 생성 */
         this.chart = new this.$chart(ctx, option)
+
+        /* 강제 뷰 업데이트 */
+        this.$forceUpdate()
       } catch (e) {
         console.log(e)
         this.$emit('openNotify', this.lang[this.$store.state.setting.lang]['applyErr'])
