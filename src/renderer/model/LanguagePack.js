@@ -14,8 +14,14 @@ const $kor = {
   home: '홈으로 가기',
   openErr: '파일을 여는 중 오류가 발생하였습니다',
   saveErr: '파일을 저장하는 중 오류가 발생하였습니다',
+  applyErr: '데이터를 적용할 수 없습니다',
   save: '저장되었습니다',
   apply: '적용',
+  add: '추가',
+  background: [
+    '흰색',
+    '기본'
+  ],
   drawer: {
     default: [
       {
@@ -60,6 +66,34 @@ const $kor = {
     created: '새 비주얼이 생성되었습니다!',
     blank: '비주얼 이름과 타입은 필수 항목입니다',
     save: '비주얼 파일 저장 디렉토리 선택'
+  },
+  props: {
+    label: '레이블',
+    fill: '채우기',
+    radius: '둥글기',
+    lineTension: '선 곡률',
+    showLine: '선 보이기',
+    spanGaps: 'spanGaps',
+    backgroundColor: '배경색',
+    borderColor: '테두리 색',
+    borderWidth: '테두리 폭',
+    borderDash: '테두리 점선',
+    borderDashOffset: '테두리 시작점',
+    borderSkipped: '테두리 스킵',
+    borderCapStyle: '테두리 끝 스타일',
+    borderJoinStyle: '테두리 접점 스타일',
+    hoverBackgroundColor: 'Hover 배경색',
+    hoverBorderColor: 'Hover 테두리 색',
+    hoverBorderWidth: 'Hover 테두리 폭',
+    pointBackgroundColor: '꼭짓점 배경색',
+    pointBorderColor: '꼭짓점 테두리 색',
+    pointBorderWidth: '꼭짓점 테두리 폭',
+    pointRadius: '꼭짓점 둥글기',
+    pointStyle: '꼭짓점 스타일',
+    pointHoverBackgroundColor: '꼭짓점 Hover 배경 색',
+    pointHoverBorderColor: '꼭짓점 Hover 테두리 색',
+    pointHoverBorderWidth: '꼭짓점 Hover 테두리 폭',
+    pointHoverRadius: '꼭짓점 Hover 둥글기'
   }
 }
 
@@ -71,8 +105,14 @@ const $eng = {
   home: 'Go to home',
   openErr: 'Open file error',
   saveErr: 'Save file error',
+  applyErr: 'Can\'t apply data',
   save: 'Saved',
   apply: 'Apply',
+  add: 'Add',
+  background: [
+    'White',
+    'Default'
+  ],
   drawer: {
     default: [
       {
@@ -117,6 +157,35 @@ const $eng = {
     created: 'New visual Created!',
     blank: 'Visual name and Type are required',
     save: 'Choose Visual file save directory'
+  },
+  /* TODO: 항목 모두 추가 후 번역 예정 */
+  props: {
+    label: '레이블',
+    fill: '채우기',
+    radius: '둥글기',
+    lineTension: '선 곡률',
+    showLine: '선 보이기',
+    spanGaps: 'spanGaps',
+    backgroundColor: '배경색',
+    borderColor: '테두리 색',
+    borderWidth: '테두리 폭',
+    borderDash: '테두리 점선',
+    borderDashOffset: '테두리 시작점',
+    borderSkipped: '테두리 스킵',
+    borderCapStyle: '테두리 끝 스타일',
+    borderJoinStyle: '테두리 접점 스타일',
+    hoverBackgroundColor: 'Hover 배경색',
+    hoverBorderColor: 'Hover 테두리 색',
+    hoverBorderWidth: 'Hover 테두리 폭',
+    pointBackgroundColor: '꼭짓점 배경색',
+    pointBorderColor: '꼭짓점 테두리 색',
+    pointBorderWidth: '꼭짓점 테두리 폭',
+    pointRadius: '꼭짓점 둥글기',
+    pointStyle: '꼭짓점 스타일',
+    pointHoverBackgroundColor: '꼭짓점 Hover 배경 색',
+    pointHoverBorderColor: '꼭짓점 Hover 테두리 색',
+    pointHoverBorderWidth: '꼭짓점 Hover 테두리 폭',
+    pointHoverRadius: '꼭짓점 Hover 둥글기'
   }
 }
 
