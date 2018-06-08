@@ -5,20 +5,47 @@
     </div>
     <div id="edit-area">
       <div id="edit-control-area">
-        <button @click="toggleBackground" class="button white-toggle">
-          {{ lang[$store.state.setting.lang]['background'][background] }}
-        </button>
-        <select class="select">
-          <option v-for="(prop, i) in properties[optionObject.type]" :key="i">
-            {{ lang[$store.state.setting.lang]['props'][prop.name] }}
-          </option>
-        </select>
-        <select class="select" v-model="label" @change="changeLabel">
-          <option v-for="data in optionObject.data.labels" :key="data">
-            {{ data }}
-          </option>
-          <option value="add"> {{ lang[$store.state.setting.lang]['add'] }} </option>
-        </select>
+        <div id="edit-select-area">
+          <select class="select" v-model="label" @change="changeLabel">
+            <option disabled value="">
+              {{ lang[$store.state.setting.lang]['label'] }}
+            </option>
+            <option v-for="data in optionObject.data.labels" :key="data">
+              {{ data }}
+            </option>
+            <option value="add"> {{ lang[$store.state.setting.lang]['add'] }} </option>
+          </select>
+          <select class="select" v-model="prop" @change="changeProperty">
+            <option disabled value="">
+              {{ lang[$store.state.setting.lang]['properties'] }}
+            </option>
+            <option v-for="(prop, i) in properties[optionObject.type]" :key="i">
+              {{ lang[$store.state.setting.lang]['props'][prop.name] }}
+            </option>
+          </select>
+          <button @click="toggleBackground" class="button white-toggle">
+            {{ lang[$store.state.setting.lang]['background'][background] }}
+          </button>
+        </div>
+        <div id="edit-cotrol">
+          <div id="edit-label">
+            <div v-if="addLabel">
+              <input class="edit-input" v-model="tempLabel">
+              <button class="button" @click="addLabelData">
+                {{ lang[$store.state.setting.lang]['add'] }}
+              </button>
+            </div>
+            <div v-else>
+              <input class="edit-input" v-model="tempLabel">
+              <button class="button" @click="changeLabelData">
+                {{ lang[$store.state.setting.lang]['change'] }}
+              </button>
+            </div>
+          </div>
+          <div id="edit-color" v-if="color">
+            Color
+          </div>
+        </div>
       </div>
       <div id="edit">
         <textarea id="edit-text-area" v-model="option"></textarea>
@@ -50,8 +77,16 @@ export default {
       properties: Properties,
       /* 배경 색 */
       background: 0,
+      /* 선택 된 프로퍼티 */
+      prop: '',
       /* 선택 레이블 */
-      label: ''
+      label: '',
+      /* 변경 예정 레이블 */
+      tempLabel: '',
+      /* 레이블 추가 */
+      addLabel: false,
+      /* 색 편집 상태 */
+      color: false
     }
   },
   computed: {
@@ -90,10 +125,61 @@ export default {
   methods: {
     /* 레이블 변경 */
     changeLabel () {
-      console.log(this.label)
       if (this.label === 'add') {
-        console.log('추가')
+        this.label = false
+        this.addLabel = true
+        this.tempLabel = ''
+      } else {
+        this.tempLabel = this.label
       }
+    },
+    /* 레이블 데이터 변경 */
+    changeLabelData () {
+      let option = JSON.parse(this.option)
+      for (let i = 0; i < option.data.labels.length; i++) {
+        if (option.data.labels[i] === this.label) {
+          option.data.labels[i] = this.tempLabel
+        }
+      }
+      this.tempLabel = ''
+      this.option = JSON.stringify(option, null, 1)
+      this.apply()
+    },
+    /* 레이블 추가 */
+    // TODO: 현재 도넛 차트 기준으로 개발 진행 중..
+    addLabelData () {
+      let option = JSON.parse(this.option)
+      let already = false
+
+      /* 레이블 중복 체크 */
+      for (let i = 0; i < option.data.labels.length; i++) {
+        if (option.data.labels[i] === this.tempLabel) {
+          already = true
+          break
+        }
+      }
+
+      /* 해당 레이블이 이미 존재하는 경우 */
+      if (already) {
+        this.$emit('openNotify', this.lang[this.$store.state.setting.lang]['already'])
+      } else {
+        /* 존재하지 않으면 추가 */
+        option.data.labels.push(this.tempLabel)
+        for (let i = 0; i < option.data.datasets.length; i++) {
+          if (option.data.datasets[i]['data'] !== undefined) {
+            option.data.datasets[i].backgroundColor.push('rgba(255, 255, 255, 0.2)')
+            option.data.datasets[i].borderColor.push('rgba(255, 255, 255, 1)')
+            option.data.datasets[i].data.push(10)
+            break
+          }
+        }
+        this.option = JSON.stringify(option, null, 1)
+        this.apply()
+      }
+    },
+    /* 프로퍼티 변경 */
+    changeProperty () {
+      console.log('Change prop')
     },
     /* 배경색 토글 */
     toggleBackground () {
@@ -240,6 +326,30 @@ export default {
   color: #a2ecfb;
   padding: 5px;
   font-size: 1.1rem;
+}
+
+#edit-select-area {
+  display: inline-block;
+  width: 100%;
+}
+
+#edit-control {
+  float: left;
+  width: 100%;
+}
+
+.edit-input {
+  outline: none;
+  border: 1px solid #8e93af;
+  background-color: #444960;
+  padding: 5px 10px;
+  color: #8e93af;
+  transition: .5s;
+}
+
+.edit-input:focus {
+  color: #a2ecfb;
+  border: 1px solid #a2ecfb;
 }
 
 </style>

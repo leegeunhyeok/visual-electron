@@ -17,11 +17,15 @@ const $kor = {
   applyErr: '데이터를 적용할 수 없습니다',
   save: '저장되었습니다',
   apply: '적용',
+  already: '이미 존재합니다',
+  change: '변경',
   add: '추가',
+  properties: '속성',
   background: [
     '흰색',
     '기본'
   ],
+  label: '레이블',
   drawer: {
     default: [
       {
@@ -108,11 +112,15 @@ const $eng = {
   applyErr: 'Can\'t apply data',
   save: 'Saved',
   apply: 'Apply',
+  already: 'Already exist',
+  change: 'Change',
   add: 'Add',
+  properties: 'Property',
   background: [
     'White',
     'Default'
   ],
+  label: 'Label',
   drawer: {
     default: [
       {
