@@ -3,7 +3,7 @@
     <div id="setting-area">
       <div id="button-group">
         <div class="setting-text">{{ lang[$store.state.setting.lang]['settings']['language'] }}</div>
-        <div class="setting-button language-button" v-for="lang in lang['langs']" :key="lang.lang" @click="changeLanguage(lang.lang)">
+        <div class="button language-button" v-for="lang in lang['langs']" :key="lang.lang" @click="changeLanguage(lang.lang)">
           {{ lang[$store.state.setting.lang] }}
         </div>
       </div>
@@ -11,7 +11,7 @@
         <div class="setting-text">
           {{ lang[$store.state.setting.lang]['settings']['fullscreen']['text'] }}
         </div>
-        <div class="setting-button" @click="toggleFullscreen">
+        <div class="button" @click="toggleFullscreen">
           {{ lang[$store.state.setting.lang]['settings']['fullscreen'][fullscreen] }}
         </div>
       </div>
@@ -19,7 +19,7 @@
         <div id="checking-image-area">
           <img src="../assets/electron.png">
         </div>
-        <div id="check-lastest-button" class="setting-button" @click="checkLastest">
+        <div id="check-lastest-button" class="button" @click="checkLastest">
           {{ lang[$store.state.setting.lang]['settings']['lastest'] }}
         </div>
         <div id="current-version">
@@ -89,20 +89,6 @@ export default {
 .setting-text {
   font-weight: bold;
   margin: 10px;
-}
-
-.setting-button {
-  cursor: pointer;
-  background-color: #282a38;
-  border-radius: 5px;
-  margin: auto;
-  padding: 10px 20px;
-  margin: 10px;
-  transition: .5s;
-}
-
-.setting-button:hover {
-  background-color: #1a1b24;
 }
 
 .language-button {

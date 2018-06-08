@@ -300,4 +300,20 @@ body {
   opacity: 0
 }
 
+.button {
+  outline: none;
+  cursor: pointer;
+  color: #a2ecfb;
+  background-color: #282a38;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  margin: 10px;
+  transition: .5s;
+}
+
+.button:hover {
+  background-color: #1a1b24;
+}
+
 </style>

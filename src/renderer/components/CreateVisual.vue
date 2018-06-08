@@ -13,7 +13,7 @@
       <canvas id="chartType"></canvas>
     </div>
     <div id="create-button-area">
-      <div id="visual-create-button" @click="onCreateVisual">
+      <div id="visual-create-button" class="button" @click="onCreateVisual">
         {{ lang[$store.state.setting.lang]['create']['submit'] }}
       </div>
     </div>
@@ -190,17 +190,9 @@ export default {
 
 #visual-create-button {
   position: absolute;
+  margin: 0;
   bottom: 50px;
   left: 50%;
   transform: translateX(-50%);
-  cursor: pointer;
-  background-color: #282a38;
-  border-radius: 5px;
-  padding: 10px 20px;
-  transition: .5s;
-}
-
-#visual-create-button:hover {
-  background-color: #1a1b24;
 }
 </style>
