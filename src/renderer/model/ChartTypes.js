@@ -120,14 +120,7 @@ const $types = [
       },
       options: {
         responsive: true,
-        maintainAspectRatio: false,
-        scales: {
-          yAxes: [{
-            ticks: {
-              beginAtZero: true
-            }
-          }]
-        }
+        maintainAspectRatio: false
       }
     }
   },
@@ -161,14 +154,7 @@ const $types = [
       },
       options: {
         responsive: true,
-        maintainAspectRatio: false,
-        scales: {
-          yAxes: [{
-            ticks: {
-              beginAtZero: true
-            }
-          }]
-        }
+        maintainAspectRatio: false
       }
     }
   },
@@ -202,14 +188,7 @@ const $types = [
       },
       options: {
         responsive: true,
-        maintainAspectRatio: false,
-        scales: {
-          yAxes: [{
-            ticks: {
-              beginAtZero: true
-            }
-          }]
-        }
+        maintainAspectRatio: false
       }
     }
   },
@@ -243,14 +222,7 @@ const $types = [
       },
       options: {
         responsive: true,
-        maintainAspectRatio: false,
-        scales: {
-          yAxes: [{
-            ticks: {
-              beginAtZero: true
-            }
-          }]
-        }
+        maintainAspectRatio: false
       }
     }
   },
@@ -282,14 +254,7 @@ const $types = [
       },
       options: {
         responsive: true,
-        maintainAspectRatio: false,
-        scales: {
-          yAxes: [{
-            ticks: {
-              beginAtZero: true
-            }
-          }]
-        }
+        maintainAspectRatio: false
       }
     }
   },
