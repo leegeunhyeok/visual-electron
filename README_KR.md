@@ -21,6 +21,7 @@ yarn run dev # 또는 (npm run dev)
 
 # 정보
 - 개발자: 이근혁(lghlove0509@naver.com)
+- 개발 중..
 <div align="center">
   <img src="./information.png">
 </div>

@@ -21,6 +21,7 @@ yarn run dev # or (npm run dev)
 
 # Information
 - Developer: Leegeunhyeok(lghlove0509@naver.com)
+- Developing..
 <div align="center">
   <img src="./information.png">
 </div>
