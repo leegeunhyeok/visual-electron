@@ -6,6 +6,7 @@
     <div id="edit-area">
       <div id="edit-control-area">
         <div id="edit-select-area">
+          <!-- 레이블 SELECT -->
           <select class="select" v-model="label" @change="changeLabel">
             <option disabled value="">
               {{ lang[$store.state.setting.lang]['label'] }}
@@ -15,6 +16,8 @@
             </option>
             <option value="add"> {{ lang[$store.state.setting.lang]['add'] }} </option>
           </select>
+          <!-- END -->
+          <!-- 속성 SELECT -->
           <select class="select" v-model="prop" @change="changeProperty">
             <option disabled value="">
               {{ lang[$store.state.setting.lang]['properties'] }}
@@ -26,6 +29,7 @@
           <button @click="toggleBackground" class="button white-toggle">
             {{ lang[$store.state.setting.lang]['background'][background] }}
           </button>
+          <!-- END -->
         </div>
         <div id="edit-cotrol">
           <div id="edit-label">
@@ -86,13 +90,16 @@ export default {
       /* 레이블 추가 */
       addLabel: false,
       /* 색 편집 상태 */
-      color: false
+      color: false,
+      /* 선택한 레이블 인덱스 */
+      labelIdx: 0
     }
   },
   computed: {
     save () {
       return this.$store.state.file.save
     },
+    /* 문자열로 되어있는 옵션 객체화 */
     optionObject () {
       return JSON.parse(this.option)
     }
@@ -131,6 +138,13 @@ export default {
         this.tempLabel = ''
       } else {
         this.tempLabel = this.label
+        /* 레이블 인덱스 구하기 */
+        for (let i = 0; i < this.optionObject.data.labels.length; i++) {
+          if (this.optionObject.data.labels[i] === this.label) {
+            this.labelIdx = i
+            break
+          }
+        }
       }
     },
     /* 레이블 데이터 변경 */
@@ -141,6 +155,7 @@ export default {
           option.data.labels[i] = this.tempLabel
         }
       }
+      /* 변경 후 임시 레이블 데이터 비우기 */
       this.tempLabel = ''
       this.option = JSON.stringify(option, null, 1)
       this.apply()
@@ -179,7 +194,13 @@ export default {
     },
     /* 프로퍼티 변경 */
     changeProperty () {
-      console.log('Change prop')
+      /* 선택한 프로퍼티 옵션 값 구하기 */
+      for (let prop of this.properties[this.optionObject.type]) {
+        if (this.lang[this.$store.state.setting.lang]['props'][prop.name] === this.prop) {
+          console.log(prop.name)
+          break
+        }
+      }
     },
     /* 배경색 토글 */
     toggleBackground () {
