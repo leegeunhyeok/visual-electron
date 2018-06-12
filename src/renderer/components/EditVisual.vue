@@ -31,21 +31,31 @@
           </button>
           <!-- END -->
         </div>
-        <div id="edit-cotrol">
+        <div id="edit-cotrol" v-if="labelIdx !== -1">
           <div id="edit-label">
+            <!-- 라벨 추가 -->
             <div v-if="addLabel">
               <input class="edit-input" v-model="tempLabel">
               <button class="button" @click="addLabelData">
                 {{ lang[$store.state.setting.lang]['add'] }}
               </button>
             </div>
+            <!-- 라벨 변경 -->
             <div v-else>
-              <input class="edit-input" v-model="tempLabel">
-              <button class="button" @click="changeLabelData">
-                {{ lang[$store.state.setting.lang]['change'] }}
-              </button>
+              <div>
+                <input class="edit-input" v-model="tempLabel">
+              </div>
+              <div>
+                <button class="button" @click="changeLabelData">
+                  {{ lang[$store.state.setting.lang]['change'] }}
+                </button>
+                <button class="button" @click="deleteLabelData">
+                  {{ lang[$store.state.setting.lang]['delete'] }}
+                </button>
+              </div>
             </div>
           </div>
+          <!-- 색 변경 -->
           <div id="edit-color" v-if="color">
             Color
           </div>
@@ -92,7 +102,7 @@ export default {
       /* 색 편집 상태 */
       color: false,
       /* 선택한 레이블 인덱스 */
-      labelIdx: 0
+      labelIdx: -1
     }
   },
   computed: {
@@ -105,7 +115,9 @@ export default {
     }
   },
   watch: {
+    /* Vuex 저장 상태 감시 */
     save (newVal, oldVal) {
+      /* 상태 변경 시 저장 메소드 호출 */
       this.saveVisual(newVal)
     }
   },
@@ -133,10 +145,10 @@ export default {
     /* 레이블 변경 */
     changeLabel () {
       if (this.label === 'add') {
-        this.label = false
         this.addLabel = true
         this.tempLabel = ''
       } else {
+        this.addLabel = false
         this.tempLabel = this.label
         /* 레이블 인덱스 구하기 */
         for (let i = 0; i < this.optionObject.data.labels.length; i++) {
@@ -188,9 +200,31 @@ export default {
             break
           }
         }
+
+        /* 선택 레이블 초기화 */
+        this.label = ''
+        /* 레이블 인덱스 초기화 */
+        this.labelIdx = -1
         this.option = JSON.stringify(option, null, 1)
         this.apply()
       }
+    },
+    /* 레이블 삭제 */
+    deleteLabelData () {
+      let option = JSON.parse(this.option)
+      for (let dataset of option.data.datasets) {
+        Object.keys(dataset).forEach(k => {
+          /* 선택된 레이블 Dataset 데이터 삭제 */
+          dataset[k].splice(this.labelIdx, 1)
+        })
+      }
+      /* 레이블 삭제 */
+      option.data.labels.splice(this.labelIdx, 1)
+
+      /* 선택 레이블 인덱스 -1 로 설정 */
+      this.labelIdx = -1
+      this.option = JSON.stringify(option, null, 1)
+      this.apply()
     },
     /* 프로퍼티 변경 */
     changeProperty () {

@@ -20,6 +20,7 @@ const $kor = {
   already: '이미 존재합니다',
   change: '변경',
   add: '추가',
+  delete: '삭제',
   properties: '속성',
   background: [
     '흰색',
@@ -115,6 +116,7 @@ const $eng = {
   already: 'Already exist',
   change: 'Change',
   add: 'Add',
+  delete: 'Delete',
   properties: 'Property',
   background: [
     'White',
