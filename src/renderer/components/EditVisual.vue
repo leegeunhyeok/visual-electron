@@ -32,7 +32,7 @@
           <!-- END -->
         </div>
         <div id="edit-cotrol" v-if="labelIdx !== -1">
-          <div id="edit-label">
+          <div id="label-edit-area">
             <!-- 라벨 추가 -->
             <div v-if="addLabel">
               <input class="edit-input" v-model="tempLabel">
@@ -57,7 +57,12 @@
           </div>
           <!-- 색 변경 -->
           <div id="edit-color" v-if="color">
-            Color
+            <form class="color-input">
+              <input type="number" class="edit-input" min="0" max="255" v-model="r">
+              <input type="number" class="edit-input" min="0" max="255" v-model="g">
+              <input type="number" class="edit-input" min="0" max="255" v-model="b">
+              <input type="number" class="edit-input" min="0" max="1" step="0.01" v-model="a">
+            </form>
           </div>
         </div>
       </div>
@@ -101,6 +106,14 @@ export default {
       addLabel: false,
       /* 색 편집 상태 */
       color: false,
+      /* 빨강 */
+      r: 0,
+      /* 초록 */
+      g: 0,
+      /* 파랑 */
+      b: 0,
+      /* 투명도 */
+      a: 1.0,
       /* 선택한 레이블 인덱스 */
       labelIdx: -1
     }
@@ -145,6 +158,8 @@ export default {
     /* 레이블 변경 */
     changeLabel () {
       if (this.label === 'add') {
+        /* 레이블 인덱스 임시로 0 지정 */
+        this.labelIdx = 0
         this.addLabel = true
         this.tempLabel = ''
       } else {
@@ -228,11 +243,39 @@ export default {
     },
     /* 프로퍼티 변경 */
     changeProperty () {
+      /* 프로퍼티가 변경되었을 경우 편집창 모두 비활성화 */
+      this.editorReset()
+      let selectedProp = ''
       /* 선택한 프로퍼티 옵션 값 구하기 */
       for (let prop of this.properties[this.optionObject.type]) {
         if (this.lang[this.$store.state.setting.lang]['props'][prop.name] === this.prop) {
-          console.log(prop.name)
+          selectedProp = prop.name
           break
+        }
+      }
+
+      const option = JSON.parse(this.option)
+      let value = null
+
+      if (selectedProp.toLowerCase().search('color') !== -1) {
+        this.color = true
+        for (let dataset of option.data.datasets) {
+          Object.keys(dataset).forEach(k => {
+            if (k === selectedProp) {
+              value = dataset[k]
+            }
+          })
+        }
+
+        if (value) {
+          let color = value[this.labelIdx].replace(/^rgba\(/, '').replace(')', '').replace(' ', '').split(',')
+          this.r = parseInt(color[0])
+          this.g = parseInt(color[1])
+          this.b = parseInt(color[2])
+          this.a = parseFloat(color[3])
+        } else {
+          /* TODO: 없는 프로퍼티일 경우 새로 추가 */
+          console.log('해당 프로퍼티가 존재하지 않습니다.')
         }
       }
     },
@@ -261,6 +304,11 @@ export default {
         console.log(e)
         this.$emit('openNotify', this.lang[this.$store.state.setting.lang]['saveErr'])
       }
+    },
+    /* 색 편집, 두께 편집 등 모든 편집창 비활성화 */
+    editorReset () {
+      this.color = false
+      console.log('Editor reset!')
     },
     /* 옵션 적용 */
     apply () {
@@ -405,6 +453,14 @@ export default {
 .edit-input:focus {
   color: #a2ecfb;
   border: 1px solid #a2ecfb;
+}
+
+#label-edit-area {
+  display: inline-block;
+}
+
+#edit-color {
+  float: right;
 }
 
 </style>
