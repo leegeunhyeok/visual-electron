@@ -22,6 +22,9 @@ function createWindow () {
   mainWindow = new BrowserWindow({
     height: 600,
     width: 1000,
+    /* 최소 높이, 폭 설정 */
+    minHeight: 600,
+    minWidth: 800,
     useContentSize: true
   })
   mainWindow.setMenu(null)
