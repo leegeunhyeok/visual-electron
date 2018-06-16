@@ -18,7 +18,7 @@
           </select>
           <!-- END -->
           <!-- 속성 SELECT -->
-          <select class="select" v-model="prop" @change="changeProperty">
+          <select class="select" v-model="prop" @change="changeProperty" v-if="label && label !== 'add'">
             <option disabled value="">
               {{ lang[$store.state.setting.lang]['properties'] }}
             </option>
@@ -56,14 +56,7 @@
             </div>
           </div>
           <!-- 색 변경 -->
-          <div id="edit-color" v-if="color">
-            <form class="color-input">
-              <input type="number" class="edit-input" min="0" max="255" v-model="r">
-              <input type="number" class="edit-input" min="0" max="255" v-model="g">
-              <input type="number" class="edit-input" min="0" max="255" v-model="b">
-              <input type="number" class="edit-input" min="0" max="1" step="0.01" v-model="a">
-            </form>
-          </div>
+          <color-edit v-if="color" :rgba="rgba" :lang="lang" @apply="setColor" @openNotify="openNotify"></color-edit>
         </div>
       </div>
       <div id="edit">
@@ -78,10 +71,14 @@
 
 <script>
 import Properties from '../model/DatasetProp.js'
+import ColorEdit from './ColorEdit.vue'
 
 export default {
   name: 'edit',
   props: ['lang'],
+  components: {
+    'color-edit': ColorEdit
+  },
   data () {
     return {
       /* 파일 경로 */
@@ -98,6 +95,8 @@ export default {
       background: 0,
       /* 선택 된 프로퍼티 */
       prop: '',
+      /* 옵션의 프로퍼티 키 */
+      propKey: '',
       /* 선택 레이블 */
       label: '',
       /* 변경 예정 레이블 */
@@ -106,14 +105,8 @@ export default {
       addLabel: false,
       /* 색 편집 상태 */
       color: false,
-      /* 빨강 */
-      r: 0,
-      /* 초록 */
-      g: 0,
-      /* 파랑 */
-      b: 0,
-      /* 투명도 */
-      a: 1.0,
+      /* 선택한 레이블의 색상 데이터 */
+      rgba: '',
       /* 선택한 레이블 인덱스 */
       labelIdx: -1
     }
@@ -157,6 +150,8 @@ export default {
   methods: {
     /* 레이블 변경 */
     changeLabel () {
+      this.prop = ''
+      this.editorReset()
       if (this.label === 'add') {
         /* 레이블 인덱스 임시로 0 지정 */
         this.labelIdx = 0
@@ -230,7 +225,9 @@ export default {
       for (let dataset of option.data.datasets) {
         Object.keys(dataset).forEach(k => {
           /* 선택된 레이블 Dataset 데이터 삭제 */
-          dataset[k].splice(this.labelIdx, 1)
+          if (Array.isArray(dataset[k]) && dataset[k][this.labelIdx] !== undefined) {
+            dataset[k].splice(this.labelIdx, 1)
+          }
         })
       }
       /* 레이블 삭제 */
@@ -245,11 +242,11 @@ export default {
     changeProperty () {
       /* 프로퍼티가 변경되었을 경우 편집창 모두 비활성화 */
       this.editorReset()
-      let selectedProp = ''
+      this.propKey = ''
       /* 선택한 프로퍼티 옵션 값 구하기 */
       for (let prop of this.properties[this.optionObject.type]) {
         if (this.lang[this.$store.state.setting.lang]['props'][prop.name] === this.prop) {
-          selectedProp = prop.name
+          this.propKey = prop.name
           break
         }
       }
@@ -257,27 +254,43 @@ export default {
       const option = JSON.parse(this.option)
       let value = null
 
-      if (selectedProp.toLowerCase().search('color') !== -1) {
+      if (this.propKey.toLowerCase().search('color') !== -1) {
+        /* 색상 에디터 창 활성화 */
         this.color = true
+
+        /* 선택한 프로퍼티 데이터 탐색 */
         for (let dataset of option.data.datasets) {
           Object.keys(dataset).forEach(k => {
-            if (k === selectedProp) {
+            if (k === this.propKey) {
               value = dataset[k]
             }
           })
         }
 
+        /* 프로퍼티가 존재할 경우 */
         if (value) {
-          let color = value[this.labelIdx].replace(/^rgba\(/, '').replace(')', '').replace(' ', '').split(',')
-          this.r = parseInt(color[0])
-          this.g = parseInt(color[1])
-          this.b = parseInt(color[2])
-          this.a = parseFloat(color[3])
+          this.rgba = value[this.labelIdx].replace(/ /gi, '')
         } else {
           /* TODO: 없는 프로퍼티일 경우 새로 추가 */
           console.log('해당 프로퍼티가 존재하지 않습니다.')
         }
       }
+    },
+    /* 선택 색상 적용 */
+    setColor (rgba) {
+      let option = JSON.parse(this.option)
+      for (let dataset of option.data.datasets) {
+        Object.keys(dataset).forEach(k => {
+          if (k === this.propKey) {
+            /* 해당 레이블의 속성에 대입 */
+            dataset[k][this.labelIdx] = rgba
+          }
+        })
+      }
+      /* 적용된 옵션 JSON을 문자열로 변환 */
+      this.option = JSON.stringify(option, null, 1)
+      /* 차트에 적용 */
+      this.apply()
     },
     /* 배경색 토글 */
     toggleBackground () {
@@ -331,6 +344,12 @@ export default {
       } catch (e) {
         console.log(e)
         this.$emit('openNotify', this.lang[this.$store.state.setting.lang]['applyErr'])
+      }
+    },
+    /* 자식 컴포넌트에게 전달받은 메시지를 알림창에 띄우기 */
+    openNotify (msg) {
+      if (msg) {
+        this.$emit('openNotify', msg)
       }
     }
   }
@@ -456,11 +475,8 @@ export default {
 }
 
 #label-edit-area {
-  display: inline-block;
-}
-
-#edit-color {
-  float: right;
+  float: left;
+  margin-right: 10px;
 }
 
 </style>

@@ -26,7 +26,14 @@ const $kor = {
     '흰색',
     '기본'
   ],
+  preview: [
+    '미리',
+    '보기'
+  ],
   label: '레이블',
+  color: '색상',
+  alpha: '알파',
+  alphaRange: '알파값의 범위는 0 ~ 1 사이입니다',
   drawer: {
     default: [
       {
@@ -122,7 +129,14 @@ const $eng = {
     'White',
     'Default'
   ],
+  preview: [
+    'Pre',
+    'view'
+  ],
   label: 'Label',
+  color: 'Color',
+  alpha: 'Alpha',
+  alphaRange: 'Alpha values ​​range from 0 to 1',
   drawer: {
     default: [
       {
